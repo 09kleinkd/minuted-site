@@ -450,29 +450,12 @@
       overflow: hidden;
       position: relative;
       background: var(--gradient-soft);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--color-ink-soft);
-      font-size: 0.85rem;
-      text-align: center;
-      padding: 1rem;
-      font-weight: 500;
+      display: block;
     }
 
-    .phone-screen.stage-5 {
-      background: linear-gradient(180deg, #FFD9D0 0%, #F5A190 50%, #E88770 100%);
-      color: #5C2414;
-    }
-
-    .phone-screen.share-card {
-      background: linear-gradient(180deg, #E9D8F0 0%, #EABDD0 50%, #E89DA8 100%);
-      color: #4B1E3A;
-    }
-
-    .phone-screen.cool {
-      background: linear-gradient(180deg, #E5EEFB 0%, #DAE5F8 100%);
-      color: #1A3B6B;
+    img.phone-screen {
+      object-fit: cover;
+      object-position: center;
     }
 
     .phone-caption {
@@ -481,6 +464,10 @@
       font-size: 0.92rem;
       color: var(--color-ink-soft);
       font-weight: 500;
+      max-width: 22ch;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.4;
     }
 
     /* Philosophy */
@@ -884,38 +871,30 @@
       <div class="phone-grid">
         <div>
           <div class="phone-frame">
-            <div class="phone-screen cool">
-              [ Screenshot 1: Running meeting, cool stage ]
-            </div>
+            <img src="screenshots/meeting-cool.png" alt="Minuted running at the start of a meeting, showing $60.34 on a calm blue gradient" class="phone-screen">
           </div>
-          <p class="phone-caption">Calm start. Just a number, quietly counting.</p>
+          <p class="phone-caption">A few minutes in. Just a number, quietly counting.</p>
         </div>
 
         <div>
           <div class="phone-frame">
-            <div class="phone-screen stage-5">
-              [ Screenshot 2: Stage 5 warm gradient, alarm banner ]
-            </div>
+            <img src="screenshots/meeting-warning.png" alt="Minuted showing a cost warning banner when the meeting crosses $100" class="phone-screen">
           </div>
-          <p class="phone-caption">Things are escalating. You notice.</p>
+          <p class="phone-caption">$100 comes up faster than you'd think. Minuted taps you on the shoulder.</p>
         </div>
 
         <div>
           <div class="phone-frame">
-            <div class="phone-screen share-card">
-              [ Screenshot 3: Share card with final total ]
-            </div>
+            <img src="screenshots/meeting-alarm.png" alt="Minuted showing $1,779 on a warm coral gradient during an expensive company meeting" class="phone-screen">
           </div>
-          <p class="phone-caption">When it's over, a card worth sharing.</p>
+          <p class="phone-caption">The bi-annual company meeting, warming up. Seven people, $191 a minute.</p>
         </div>
 
         <div>
           <div class="phone-frame">
-            <div class="phone-screen cool">
-              [ Screenshot 4: History screen ]
-            </div>
+            <img src="screenshots/share-card.png" alt="Minuted share card showing a finished meeting that cost $2,017 on a red gradient" class="phone-screen">
           </div>
-          <p class="phone-caption">Your meetings, over time. The pattern gets loud.</p>
+          <p class="phone-caption">When it's over, a card worth sharing in Slack.</p>
         </div>
       </div>
     </div>
