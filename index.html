@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -766,18 +766,67 @@
       font-size: 0.85rem;
     }
 
-    /* Scroll reveal */
+    /* ─────────────────────────────────────────────────────
+       Scroll reveal animations
+       Subtle fade + upward slide as elements enter viewport.
+       Respects prefers-reduced-motion.
+       ───────────────────────────────────────────────────── */
+
     .reveal {
       opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
+      transform: translateY(24px);
+      transition:
+        opacity 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
+        transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+      will-change: opacity, transform;
     }
 
     .reveal.visible {
       opacity: 1;
       transform: translateY(0);
     }
+
+    /* Staggered children — each child animates with an increasing delay */
+    .reveal-stagger > * {
+      opacity: 0;
+      transform: translateY(24px);
+      transition:
+        opacity 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
+        transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+      will-change: opacity, transform;
+    }
+
+    .reveal-stagger.visible > *:nth-child(1)  { transition-delay: 0.05s; opacity: 1; transform: translateY(0); }
+    .reveal-stagger.visible > *:nth-child(2)  { transition-delay: 0.12s; opacity: 1; transform: translateY(0); }
+    .reveal-stagger.visible > *:nth-child(3)  { transition-delay: 0.19s; opacity: 1; transform: translateY(0); }
+    .reveal-stagger.visible > *:nth-child(4)  { transition-delay: 0.26s; opacity: 1; transform: translateY(0); }
+    .reveal-stagger.visible > *:nth-child(5)  { transition-delay: 0.33s; opacity: 1; transform: translateY(0); }
+    .reveal-stagger.visible > *:nth-child(6)  { transition-delay: 0.40s; opacity: 1; transform: translateY(0); }
+
+    /* Reduce motion — respect the user's system setting.
+       When enabled, content appears instantly with no animation. */
+    @media (prefers-reduced-motion: reduce) {
+      .reveal,
+      .reveal-stagger > * {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+    }
+
+    /* No-JS fallback — if JavaScript is disabled, show everything
+       immediately so content isn't invisible. */
+    .no-js .reveal,
+    .no-js .reveal-stagger > * {
+      opacity: 1;
+      transform: none;
+    }
   </style>
+  <script>
+    // Remove no-js class early (inline, before body renders) so we don't
+    // see a flash of "everything visible" before the JS observer kicks in.
+    document.documentElement.classList.remove('no-js');
+  </script>
 </head>
 <body>
 
@@ -813,7 +862,7 @@
   </header>
 
   <section class="pitch" id="what">
-    <div class="container-narrow">
+    <div class="container-narrow reveal">
       <div class="section-eyebrow">The idea</div>
       <p class="pitch-lead">Most meeting tools assume your time is free. It isn't. A one-hour sync with four senior people can cost <em>more than dinner for eight.</em> Minuted turns that invisible cost into something you can feel — a number on your screen, climbing with every minute you stay in the room.</p>
     </div>
@@ -821,9 +870,11 @@
 
   <section class="features">
     <div class="container">
-      <div class="section-eyebrow">What it does</div>
-      <h2>Designed around the <em style="font-style:italic;color:var(--color-purple)">live number.</em></h2>
-      <div class="features-grid">
+      <div class="reveal">
+        <div class="section-eyebrow">What it does</div>
+        <h2>Designed around the <em style="font-style:italic;color:var(--color-purple)">live number.</em></h2>
+      </div>
+      <div class="features-grid reveal-stagger">
 
         <div class="feature">
           <div class="feature-icon">
@@ -900,13 +951,15 @@
 
   <section class="showcase" id="showcase">
     <div class="container">
-      <div class="section-eyebrow">In practice</div>
-      <div class="showcase-intro">
-        <h2>What it feels like to <em style="font-style:italic;color:var(--color-coral)">actually see</em> the cost.</h2>
-        <p>The app is quiet until it shouldn't be. Most meetings stay in the cool blue range and you barely notice it's there. Then something drags on, the gradient starts to warm, and you remember why you installed this in the first place.</p>
+      <div class="reveal">
+        <div class="section-eyebrow">In practice</div>
+        <div class="showcase-intro">
+          <h2>What it feels like to <em style="font-style:italic;color:var(--color-coral)">actually see</em> the cost.</h2>
+          <p>The app is quiet until it shouldn't be. Most meetings stay in the cool blue range and you barely notice it's there. Then something drags on, the gradient starts to warm, and you remember why you installed this in the first place.</p>
+        </div>
       </div>
 
-      <div class="phone-grid">
+      <div class="phone-grid reveal-stagger">
         <div>
           <div class="phone-frame">
             <img src="screenshots/meeting-cool.png" alt="Minuted running at the start of a meeting, showing $60.34 on a calm blue gradient" class="phone-screen">
@@ -940,11 +993,13 @@
 
   <section class="philosophy">
     <div class="container-narrow">
-      <div class="section-eyebrow" style="color:var(--color-purple)">The approach</div>
-      <h2>Built to respect your time <em style="font-style:italic;color:var(--color-coral)">and your data.</em></h2>
-      <p class="philosophy-lead">Minuted runs entirely on your phone. No account. No cloud. No "anonymized analytics" of your meeting habits. The data stays where it belongs — with you.</p>
+      <div class="reveal">
+        <div class="section-eyebrow" style="color:var(--color-purple)">The approach</div>
+        <h2>Built to respect your time <em style="font-style:italic;color:var(--color-coral)">and your data.</em></h2>
+        <p class="philosophy-lead">Minuted runs entirely on your phone. No account. No cloud. No "anonymized analytics" of your meeting habits. The data stays where it belongs — with you.</p>
+      </div>
 
-      <div class="philosophy-points">
+      <div class="philosophy-points reveal-stagger">
         <div class="philosophy-point">
           <strong>On-device only</strong>
           <p>Everything stored locally. Nothing leaves your phone, ever.</p>
@@ -968,7 +1023,7 @@
   <section class="maker" id="maker">
     <div class="container">
       <div class="section-eyebrow">About the maker</div>
-      <div class="maker-content">
+      <div class="maker-content reveal">
         <div class="maker-label">Made by one person, on purpose.</div>
         <div class="maker-text">
           <p>Minuted is made by Kurt Klein — a person who sat in one too many meetings wondering what they were actually costing the company. The first version was a spreadsheet. This is what it grew into.</p>
@@ -984,7 +1039,7 @@
   </section>
 
   <section class="cta-band">
-    <div class="cta-band-inner container">
+    <div class="cta-band-inner container reveal">
       <h2>Stop wondering. <em>Start seeing.</em></h2>
       <a href="#" class="btn-white">
         <span>Download on the App Store</span>
@@ -1031,16 +1086,38 @@
   </footer>
 
   <script>
-    // Scroll reveal
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.1 });
+    // Scroll reveal — observe .reveal and .reveal-stagger elements.
+    // When they enter the viewport, add .visible to trigger the CSS animation.
+    // Elements animate once and then stop observing (no re-animation on scroll-up).
 
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    (function() {
+      // Feature detection — if IntersectionObserver isn't available (very old browsers),
+      // just show everything immediately.
+      if (!('IntersectionObserver' in window)) {
+        document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => {
+          el.classList.add('visible');
+        });
+        return;
+      }
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        // Trigger when element is 15% into the viewport — feels natural,
+        // content has time to animate in before the user scrolls past it.
+        threshold: 0.15,
+        rootMargin: '0px 0px -50px 0px'
+      });
+
+      document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => {
+        observer.observe(el);
+      });
+    })();
   </script>
 
 </body>
