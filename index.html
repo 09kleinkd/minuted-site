@@ -821,6 +821,12 @@
     .reveal-stagger.visible > *:nth-child(4)  { transition-delay: 0.26s; opacity: 1; transform: translateY(0); }
     .reveal-stagger.visible > *:nth-child(5)  { transition-delay: 0.33s; opacity: 1; transform: translateY(0); }
     .reveal-stagger.visible > *:nth-child(6)  { transition-delay: 0.40s; opacity: 1; transform: translateY(0); }
+    .reveal-stagger.visible > *:nth-child(7)  { transition-delay: 0.47s; opacity: 1; transform: translateY(0); }
+    .reveal-stagger.visible > *:nth-child(8)  { transition-delay: 0.54s; opacity: 1; transform: translateY(0); }
+    /* Catch-all so the grid can grow without cards silently staying invisible.
+       Delay is capped here rather than climbing per card, which would leave the
+       last one crawling in well after the user has scrolled past it. */
+    .reveal-stagger.visible > *:nth-child(n+9) { transition-delay: 0.60s; opacity: 1; transform: translateY(0); }
 
     /* Reduce motion — respect the user's system setting.
        When enabled, content appears instantly with no animation. */
